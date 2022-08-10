@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/character_0001.png" type="Texture" id=1]
+[ext_resource path="res://Assets/character_0000.png" type="Texture" id=2]
+[ext_resource path="res://Assets/char sprites/tile_0022.png" type="Texture" id=3]
+[ext_resource path="res://Assets/char sprites/tile_0024.png" type="Texture" id=4]
+[ext_resource path="res://Assets/char sprites/tile_0025.png" type="Texture" id=5]
+[ext_resource path="res://Assets/char sprites/tile_0023.png" type="Texture" id=6]
+[ext_resource path="res://ReferenciaObjeto.gd" type="Script" id=7]
+[ext_resource path="res://Player.gd" type="Script" id=9]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "Ataque",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "Andar",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Inato",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 12 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10.625, 10 )
+
+[node name="Player" type="KinematicBody2D" groups=["Player", "Saved"]]
+position = Vector2( 49, 4 )
+collision_layer = 2
+script = ExtResource( 9 )
+
+[node name="ReferenciaObjeto" type="Node2D" parent="."]
+position = Vector2( -14, -18 )
+script = ExtResource( 7 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "Inato"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="AreaAtaque" type="Area2D" parent="."]
+position = Vector2( 15, 2 )
+
+[node name="AtaqueCollisao" type="CollisionShape2D" parent="AreaAtaque"]
+position = Vector2( 5.375, 0 )
+shape = SubResource( 4 )
+disabled = true
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="body_entered" from="AreaAtaque" to="." method="_on_AreaAtaque_body_entered"]

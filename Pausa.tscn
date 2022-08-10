@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Pausa.gd" type="Script" id=1]
+[ext_resource path="res://Assets/blackimage.jpg" type="Texture" id=2]
+[ext_resource path="res://menudesave.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://After The End Placeholder Assets/Fonts/LoveLetter.TTF"
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+
+[node name="Pausa" type="CanvasLayer"]
+pause_mode = 2
+layer = 2
+script = ExtResource( 1 )
+
+[node name="background" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.639216 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -57.5
+margin_top = -70.0
+margin_right = 57.5
+margin_bottom = 70.0
+
+[node name="Resumir" type="Button" parent="VBoxContainer" groups=["Botoes"]]
+margin_right = 115.0
+margin_bottom = 32.0
+theme = SubResource( 3 )
+text = "Resume"
+
+[node name="Save" type="Button" parent="VBoxContainer" groups=["Botoes"]]
+margin_top = 36.0
+margin_right = 115.0
+margin_bottom = 68.0
+theme = SubResource( 3 )
+text = "Save"
+
+[node name="Opcoes" type="Button" parent="VBoxContainer" groups=["Botoes"]]
+margin_top = 72.0
+margin_right = 115.0
+margin_bottom = 104.0
+theme = SubResource( 3 )
+text = "Options"
+
+[node name="Exit" type="Button" parent="VBoxContainer" groups=["Botoes"]]
+margin_top = 108.0
+margin_right = 115.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 786, -360 )
+theme = SubResource( 3 )
+text = "Exit"
+
+[node name="menudesave" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/Resumir" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="VBoxContainer/Opcoes" to="." method="_on_Opcoes_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
